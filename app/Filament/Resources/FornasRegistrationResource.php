@@ -28,7 +28,13 @@ class FornasRegistrationResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::whereIn('status', ['Menunggu', 'Diproses'])->count();
+        $query = static::getModel()::whereIn('status', ['Menunggu', 'Diproses']);
+
+        if (!Auth::user()->hasAnyRole(['Super Admin', 'Admin'])) {
+            $query->where('user_id', Auth::id());
+        }
+
+        return (string) $query->count();
     }
     protected static ?string $navigationBadgeTooltip = 'Jumlah pendaftar yang menunggu verifikasi';
 
