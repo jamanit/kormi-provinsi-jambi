@@ -26,6 +26,12 @@ class FornasRegistrationResource extends Resource
     protected static ?string $modelLabel       = 'Pendaftaran';
     protected static ?int $navigationSort      = 32;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::whereIn('status', ['Menunggu', 'Diproses'])->count();
+    }
+    protected static ?string $navigationBadgeTooltip = 'Jumlah pendaftar yang menunggu verifikasi';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -57,7 +63,7 @@ class FornasRegistrationResource extends Resource
                     ->tel()
                     ->maxLength(20),
 
-                Forms\Components\Fieldset::make('Status Registrasi')
+                Forms\Components\Fieldset::make('Status Pendaftaran')
                     ->schema([
                         Forms\Components\Radio::make('status')
                             ->label('Status')
@@ -125,7 +131,7 @@ class FornasRegistrationResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->label('Status Registrasi')
+                    ->label('Status Pendaftaran')
                     ->sortable()
                     ->searchable()
                     ->badge()
@@ -142,7 +148,7 @@ class FornasRegistrationResource extends Resource
                     ->tooltip('Lihat Detail')
                     ->action(
                         \Filament\Tables\Actions\Action::make('detail_status_registrasi')
-                            ->label('Detail Status Registrasi')
+                            ->label('Detail Status Pendaftaran')
                             ->modalWidth('md')
                             ->modalSubmitAction(false)
                             ->modalCancelAction(false)
