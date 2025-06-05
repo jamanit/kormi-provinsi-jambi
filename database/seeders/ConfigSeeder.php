@@ -54,7 +54,7 @@ class ConfigSeeder extends Seeder
                 'key'             => 'meta',
                 'type'            => 'textarea',
                 'value'           => '<meta name="description" content="" />
-    <meta property="og:title" content="SITE NAME" />
+    <meta property="og:title" content="KORMI PROVINSI JAMBI" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://example.com" />
